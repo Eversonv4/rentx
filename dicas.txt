@@ -1,0 +1,15 @@
+executando uma migration em TypeORM
+   yarn typeorm migration:create -n NomeDaMigration
+
+   OBS: dar uma olhada no package.json para ver esse tal script "typeorm" e ver o arquivo "ormconfig.json" que possui uma nova propriedade sobre o diterório em que deverá ser criadas às migrations
+
+Em caso de erro, podemos reverter uma migration
+   yarn typeorm migration:revert
+
+
+
+
+save for later ormconfig.json
+     // "host": "database_ignite",
+   package.json: 
+      "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -d src/database/data-source.ts"

@@ -1,0 +1,61 @@
+Criar imagem:
+   docker build -t nome-projeto .
+
+Rodar o docker: 
+   docker run -p 3333:3333 nome-projeto
+
+Listar containers:
+   docker ps
+
+Entrar em um container específico (dá para acessar o que tem dentro do container, a pasta lá que foi criada com os arquivos dentro)
+   docker exec -it nome-do-container /bin/bash
+
+
+
+Parar a execução de um container
+   docker stop container-ID
+
+Remover um container (para remover, o container precisa estar parado (stop))
+   docker rm container-ID
+
+Iniciar um container
+   docker start container-ID (ou nome também serve)
+
+Ver os logs do projeto enquanto ele está rodando em segundo plano
+   docker logs nome-do-container -f
+
+
+Executando docker-compose
+   docker-compose up
+      ou 
+   docker-compose up -d (fica rodando em segundo plano e libera o terminal pra gente usar à vontade)
+
+Recriar o container à força
+   docker-compose up --force-recreate
+
+Parando um docker-compose
+   docker-compose stop
+
+Iniciando um docker-compose (que já foi montado com o comando "up")
+   docker-compose start
+
+Se quiser parar o docker e remover os arquivos que foram criados (excluir dados)
+   docker-compose down
+
+Remover todos os containers
+   docker-compose down -v --rmi local
+
+Comando para saber qual o endereço em que determinado container está sendo executado "localhost"
+   docker inspect --format="{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" nome-do-container
+
+   OBS: Se estiver usando macOS ou Linux, as aspas são SIMPLES, mas para windows obrigatoriamente precisam ser duplas
+
+Listando outros endereços de IP do nosso container
+   docker exec nome-do-container cat /etc/hosts
+
+Possíveis erros:
+   Quando tiver um erro com o banco de dados com a conexão voce pode fazer o seguinte:
+   No seu ormconfig.json no atributo "host", você pode colocar o mesmo nome do serviço do docker compose que você criou, pois o docker vai gerenciar por baixo dos panos o IP.
+      ex: Nome do container é: database_ignite
+      
+      Agora vai no arquivo ormconfig.json, que é o arquivo de variáveis de ambiente do nosso banco de dados e ao invés de passar "localhost" ou algo do tipo, é só colocar o nome do container, é o docker consegue localizar direitinho.
