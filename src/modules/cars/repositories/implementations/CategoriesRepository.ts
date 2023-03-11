@@ -10,29 +10,12 @@ import { AppDataSource } from "../../../../database/data-source";
 class CategoriesRepository implements ICategoriesRepository {
   private repository: Repository<Category>;
 
-  private static INSTANCE: CategoriesRepository;
-
-  private constructor() {
+  constructor() {
     this.repository = AppDataSource.getRepository(Category);
   }
 
-  public static getInstance(): CategoriesRepository {
-    if (!CategoriesRepository.INSTANCE) {
-      CategoriesRepository.INSTANCE = new CategoriesRepository();
-    }
-
-    return CategoriesRepository.INSTANCE;
-  }
-
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    // const category = new Category();
-
-    // Object.assign(category, {
-    //   name,
-    //   description,
-    //   created_at: new Date(),
-    // });
-
+    // creating an category instance before saving it in database, otherwise it wouldn't be posible to save it.
     const category = this.repository.create({
       description,
       name,

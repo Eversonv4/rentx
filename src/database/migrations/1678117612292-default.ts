@@ -1,14 +1,36 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class default1678117612292 implements MigrationInterface {
-    name = 'default1678117612292'
+export class CreateCategories1678117612292 implements MigrationInterface {
+  name = "default1678117612292";
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "categories" ("id" character varying NOT NULL, "name" character varying NOT NULL, "description" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_24dbc6126a28ff948da33e97d3b" PRIMARY KEY ("id"))`);
-    }
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
+        name: "categories",
+        columns: [
+          {
+            name: "id",
+            type: "uuid",
+          },
+          {
+            name: "name",
+            type: "varchar",
+          },
+          {
+            name: "description",
+            type: "varchar",
+          },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
+          },
+        ],
+      })
+    );
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "categories"`);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable("categories");
+  }
 }
